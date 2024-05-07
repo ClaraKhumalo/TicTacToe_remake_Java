@@ -34,9 +34,9 @@ public class TicTacToe{
                     String move2 = playWithBot();
                     player2Moves.add(move2);
                     assessWinner();
+                }else {
+                    partnerPrompt();
                 }
-            } else {
-                partnerPrompt();
             }
         }
         playAgain();
@@ -80,6 +80,8 @@ public class TicTacToe{
 
     public static void assessWinner(){
         System.out.println(player1Moves);
+//        System.out.println(String.format("%s is the winner",(player1Moves.contains("1")&&player1Moves.contains("2")&&player1Moves.contains("3")||player2Moves.contains("1")&&player2Moves.contains("2")&&player2Moves.contains("3"))?player1:player2));
+
         if (player1Moves.contains("1")&&player1Moves.contains("2")&&player1Moves.contains("3")){
             System.out.println(String.format("%s is the winner",player1));
             isContinuing=false;
