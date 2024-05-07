@@ -24,7 +24,7 @@ public class TicTacToe{
             player1Moves.add(move1);
             playWithFriend1(move1);
             assessWinner();
-            if (isContinuing==true) {
+            if (isContinuing) {
                 if (chosenPartner == 1) {
                     String move2 = choosePosition();
                     player2Moves.add(move2);
