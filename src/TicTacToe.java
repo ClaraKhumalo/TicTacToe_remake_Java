@@ -9,8 +9,6 @@ public class TicTacToe{
     public static ArrayList<String> availablePositions=new ArrayList<>();
 
 
-//    public static int[] availablePositions= {1, 2, 3, 4, 5, 6, 7, 8, 9};
-
     public static void main(String[] Args) {
         addAvailablePositions();
         System.out.println("Postions="+availablePositions);
@@ -21,28 +19,27 @@ public class TicTacToe{
 
     public static void gameLoop(){
         int chosenPartner=partnerPrompt();
-        while (isContinuing) {
-//            if (!availablePositions.isEmpty()) {
-            if (chosenPartner == 1) {
-                String move1 = choosePosition();
-                player1Moves.add(move1);
-                playWithFriend1(move1);
-                assessWinner();
-                if (isContinuing==false) {
+            while (isContinuing) {
+            String move1 = choosePosition();
+            player1Moves.add(move1);
+            playWithFriend1(move1);
+            assessWinner();
+            if (isContinuing==true) {
+                if (chosenPartner == 1) {
                     String move2 = choosePosition();
                     player2Moves.add(move2);
                     playWithFriend2(move2);
                     assessWinner();
+                } else if (chosenPartner == 2) {
+                    String move2 = playWithBot();
+                    player2Moves.add(move2);
+                    assessWinner();
                 }
-            } else if (chosenPartner == 2) {
-                playWithBot();
             } else {
                 partnerPrompt();
             }
-//            } else {
-//                System.out.println("Thank you for playing.\nSee you again soon!");
-//            }
         }
+        playAgain();
     }
 
     public static ArrayList<String> addAvailablePositions(){
@@ -82,24 +79,53 @@ public class TicTacToe{
     }
 
     public static void assessWinner(){
+        System.out.println(player1Moves);
         if (player1Moves.contains("1")&&player1Moves.contains("2")&&player1Moves.contains("3")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("1")&&player1Moves.contains("4")&&player1Moves.contains("7")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("1")&&player1Moves.contains("5")&&player1Moves.contains("9")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("2")&&player1Moves.contains("5")&&player1Moves.contains("8")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("3")&&player1Moves.contains("6")&&player1Moves.contains("9")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("3")&&player1Moves.contains("5")&&player1Moves.contains("7")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
         }else if (player1Moves.contains("7")&&player1Moves.contains("8")&&player1Moves.contains("9")){
             System.out.println(String.format("%s is the winner",player1));
+            isContinuing=false;
+        }else if (player2Moves.contains("1")&&player2Moves.contains("2")&&player2Moves.contains("3")){
+            System.out.println(String.format("%s is the winner",player1));isContinuing=true;
+        }else if (player2Moves.contains("1")&&player2Moves.contains("4")&&player2Moves.contains("7")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
+        }else if (player2Moves.contains("1")&&player2Moves.contains("5")&&player2Moves.contains("9")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
+        }else if (player2Moves.contains("2")&&player2Moves.contains("5")&&player2Moves.contains("8")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
+        }else if (player2Moves.contains("3")&&player2Moves.contains("6")&&player2Moves.contains("9")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
+        }else if (player1Moves.contains("3")&&player1Moves.contains("5")&&player1Moves.contains("7")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
+        }else if (player2Moves.contains("7")&&player2Moves.contains("8")&&player2Moves.contains("9")){
+            System.out.println(String.format("%s is the winner",player2));
+            isContinuing=false;
         }else if (availablePositions.isEmpty()){
             System.out.println("Tie!");
+            isContinuing=false;
         }
-        playAgain();
+
     }
 
 
@@ -109,6 +135,7 @@ public class TicTacToe{
     public static boolean playAgain(){
         System.out.println("Thank you for playing.\nSee you again soon!");
         Scanner scanner=new Scanner(System.in);
+        System.out.println("Would you like to play again?\nEnter either Yes/y or No/n");
         String continueGame=scanner.nextLine();
         if (continueGame.equalsIgnoreCase("Y")||continueGame.equalsIgnoreCase("Yes")){
             isContinuing=true;
@@ -116,6 +143,7 @@ public class TicTacToe{
             player2Moves.clear();
             player1="";
             player2="";
+            availablePositions.clear();
             addAvailablePositions();
             gameLoop();
         }else if (continueGame.equalsIgnoreCase("N")||continueGame.equalsIgnoreCase("No")){
@@ -137,38 +165,29 @@ public class TicTacToe{
     public static void playWithFriend1(String move){
         if (availablePositions.contains(move)&&!availablePositions.isEmpty()){
             System.out.println(String.format("%s: %s",player1,move));
-//            if (move>=1){
-//                move=move-1;
-//            }
-//            java.lang.String finalMove = move;
-//            availablePositions.removeIf(position->position.equals(finalMove));
-//            availablePositions.removeAll(List.of(move));
             availablePositions.remove(move);
         } else{
             System.out.println("Incorrect Input");
             choosePosition();
         }
-        // return;
     }
     public static void playWithFriend2(String move){
         if (availablePositions.contains(move)){
             System.out.println(String.format("%s: %s",player2,move));
-//            if (move>=1){
-//                move=move-1;
-//            }
-//            availablePositions.removeAll(List.of(move));
             availablePositions.remove(move);
         } else{
             System.out.println("Incorrect Input");
             choosePosition();
         }
-        // return;
     }
 
-    public static void playWithBot(){
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("Choose an available number from the list below:");
-        int move=scanner.nextInt();
+    public static String playWithBot(){
+        Random randomMove=new Random();
+        String botMove=availablePositions.get(randomMove.nextInt(availablePositions.size()));
+        System.out.println(String.format("%s: %s",player2,botMove));
+        availablePositions.remove(botMove);
+        System.out.println(botMove);
+        return botMove;
     }
 
 }
