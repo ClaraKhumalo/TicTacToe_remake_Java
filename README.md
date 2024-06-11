@@ -1,4 +1,4 @@
-# Project Title: Tic Tac Toe Python Remake
+# Project Title: Tic Tac Toe Java Remake
 
 ## Description:
 
